@@ -35,7 +35,7 @@
 #define _mqttsubscribe "/#"     //use mqtt or not, comment for no mqtt, just the wildcard, the prefix is in the configuration page
 
 // -- Initial name of the Thing. Used e.g. as SSID of the own Access Point.
-const char thingName[] = "Wortuhr";
+const char thingName[] = "WortuhrB";
 
 // -- Initial password to connect to the Thing, when it creates an own Access Point.
 const char wifiInitialApPassword[] = "25061960";
@@ -186,6 +186,7 @@ int enable_es_ist;
 int savepraesenz=0;
 int lauflicht;
 
+/*
 int stat_warnung_a=0;
 int stat_warnung_b=0;
 int stat_warnung_c=0;
@@ -203,14 +204,17 @@ int stat_Solar_links=0;
 int stat_Solar_rechts=0;
 int stat_Laden_links=0;
 int stat_Laden_rechts=0;
+*/
+
 int temp=0;
 
-unsigned long lastsolar, lastladen,lastpraesenz;
+//unsigned long lastsolar, lastladen,lastpraesenz;
+unsigned long lastpraesenz;
 
 
 //###################################################################################################################
-const uint8_t kMatrixWidth = 13;
-const uint8_t kMatrixHeight = 13;
+const uint8_t kMatrixWidth = 16;
+const uint8_t kMatrixHeight = 16;
 
 #define MAX_DIMENSION ((kMatrixWidth>kMatrixHeight) ? kMatrixWidth : kMatrixHeight)
 #define NUM_LEDS (kMatrixWidth * kMatrixHeight)
@@ -295,7 +299,7 @@ max_helligkeit=1024;
 
 val_init();     // Variablen aus der gespeicherten config vorbelegen
 last_millis=ticker=variantenticker=millis();
-lastsolar=lastladen=millis()+700000;    // erst mal aus
+//lastsolar=lastladen=millis()+700000;    // erst mal aus
 lastpraesenz=0;
 lwait=200;
 lauflicht=0;
@@ -334,11 +338,11 @@ void loop()
 {
 
 int noiseval=0;
-int tmp=0;
+//int tmp=0;
 int hue=0;
 int sat=0;
-int showsolar=0;
-int showladen=0;
+//int showsolar=0;
+//int showladen=0;
 
 #include "Template_loop.h"
 
@@ -386,11 +390,11 @@ if (temp>=30) {sat=255; hue=map(temp,30,40,30,0);}         //durch die Steuerung
    // Wenn die Werte zu geringfügig erlischt die Anzeige (z.B. nachts keine Azeige von Solar)
    // Wenn beides angezeigt werden soll wechselt die Anzeige jede Minute
 
-  if ((millis()-lastsolar<650000) && ((stat_Solar_links+stat_Solar_rechts) > 50)) {showsolar=1; tmp++;}   // keine, eine oder zwei Wertanzeige
-  if ((millis()-lastladen<650000) && ((stat_Laden_links+stat_Laden_rechts) > 200)) {showladen=1;tmp++;}
+  //if ((millis()-lastsolar<650000) && ((stat_Solar_links+stat_Solar_rechts) > 50)) {showsolar=1; tmp++;}   // keine, eine oder zwei Wertanzeige
+  //if ((millis()-lastladen<650000) && ((stat_Laden_links+stat_Laden_rechts) > 200)) {showladen=1;tmp++;}
 
 
-      if (showsolar && ((tmp==1) || (tm.tm_min % 2)) ) {  //ungrade Minuten wenn beides angezeigt, sonst immer
+  /*    if (showsolar && ((tmp==1) || (tm.tm_min % 2)) ) {  //ungrade Minuten wenn beides angezeigt, sonst immer
        Set_Text(w_solar,0,180,helli/2);
        for (int x=0; x<map(stat_Solar_links, 0, 600, 0, 6); x++)  leds[XY(x,12)] = CHSV(0,180,helli/2);
        for (int x=12; 12-x<map(stat_Solar_rechts, 0, 600, 0, 6); x--)  leds[XY(x,12)] = CHSV(0,180,helli/2);
@@ -426,6 +430,8 @@ if (lauflicht==6) lauflicht=0;
    if (stat_sommer>0) Set_Text(w_sommer, stat_sommer, 255, helli/2);
    if (stat_winter>0) Set_Text(w_winter, stat_winter, 255, helli/2);
    if (stat_weihnachten>0) Set_Text(w_weihnachten, stat_weihnachten, 255, helli/2);
+
+*/
 
     FastLED.show();
     last_millis=millis();
@@ -536,7 +542,8 @@ void mqttMessageReceived(String &topic, String &payload)
     s=mqttsubscribe;
     // if (payload=="on" || payload=="ON" || payload=="an" || payload=="ein" || payload=="true" || payload=="1") wert=false; else wert=true; // !! negative Logik der Relais
     // if (topic==s+"/SetRel1") {RelState[1]=wert;  change=true;}
-    
+ 
+    /*   
     if (topic==s+"/SetSolar_links") {stat_Solar_links=payload.toInt();  lastsolar=millis(); change=true;}
     if (topic==s+"/SetSolar_rechts") {stat_Solar_rechts=payload.toInt();  lastsolar=millis();  change=true;}
     if (topic==s+"/SetLaden_links") {stat_Laden_links=payload.toInt();  lastladen=millis();  change=true;}
@@ -555,12 +562,12 @@ void mqttMessageReceived(String &topic, String &payload)
     if (topic==s+"/SetSommer") {stat_sommer=payload.toInt(); change=true;}
     if (topic==s+"/SetWinter") {stat_winter=payload.toInt(); change=true;}
     if (topic==s+"/SetWeihnachten") {stat_weihnachten=payload.toInt(); change=true;}
-
+*/
     if (topic==s+"/SetTemp") {temp=payload.toInt(); change=true;}
 
-    if (topic==s+"/Reset") {stat_warnung_a=stat_warnung_b=stat_warnung_c=stat_warnung_e=stat_warnung_f=stat_warnung_g=0;
-                            lastsolar=lastladen=millis()+700000;
-                            change=true;}
+ //   if (topic==s+"/Reset") {stat_warnung_a=stat_warnung_b=stat_warnung_c=stat_warnung_e=stat_warnung_f=stat_warnung_g=0;
+ //                           lastsolar=lastladen=millis()+700000;
+ //                           change=true;}
 
   }
 }

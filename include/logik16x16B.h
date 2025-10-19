@@ -28,13 +28,14 @@ if ((millis()-variantenticker) > 30000) {
     tmp=millis() % 6;
     if (tmp < 3) variante=0; else variante=1;
     if ((tmp >=2) && (tmp<=4)) enable_es_ist=0; else enable_es_ist=1;
-    if ((tmp ==1) || (tmp ==3) || (tmp ==5)) enable_uhr=0; else enable_uhr=1;
+    if ((tmp ==1) || (tmp ==3) || (tmp ==5)) enable_gimmik=0; else enable_gimmik=1;
     variantenticker=millis();
    }
 
 
 if (enable_es_ist==1) {Set_Text(w_es,h,s,v); Set_Text(w_ist,h,s,v);}
-if (enable_uhr==1) {Set_Text(w_uhr,h,s,v); }
+if (digitalRead(praesenz)!=0) {Set_Text(w_hallo,30,150,v/2); Set_Text(w_brigitte,30,150,v/2); if (variante==0) Set_Text(w_liebe,30,150,v/2); }
+
 
 
 switch(tm.tm_min) {

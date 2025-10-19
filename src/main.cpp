@@ -180,7 +180,7 @@ IotWebConfPasswordParameter mqttUserPasswordParam = IotWebConfPasswordParameter(
 
 unsigned long lwait;
 int helli=20;
-int enable_es_ist, enable_uhr;
+int enable_es_ist, enable_gimmik, enable_ansprache;
 int savepraesenz=0;
 int lauflicht;
 

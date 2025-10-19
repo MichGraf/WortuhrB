@@ -9,7 +9,7 @@ void handleFile()
   s += "<li>File System Info: ";
   s += "<br> <br>";
   
-  /*
+  
   FSInfo fs_info;
   LittleFS.info(fs_info);
  
@@ -22,9 +22,7 @@ void handleFile()
   s += "Block size:       ";
   s += fs_info.blockSize;
   s += " byte <br>";
-  s += "Page size:        ";
-  s += fs_info.totalBytes;
-  s += " byte <br>";
+
  
   //  Serial.print("Max open files:   ");
   //  Serial.println(fs_info.maxOpenFiles);
@@ -40,7 +38,7 @@ while (dir.next()) {
   s += dir.fileSize();
   s += "<br>";
 }
-*/  s+="LittleFS does not work in the  moment";
+// s+="LittleFS does not work in the  moment";
 
   s += "</ul>";
   s += "</body></html>\n";

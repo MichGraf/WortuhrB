@@ -26,12 +26,13 @@ swort w_kurz            =   {12,4,4};       //kurz
 swort w_elfm             =   {0,5,3};       //elf 
 swort w_viertelm         =   {3,5,7};       //viertel min
 swort w_schlaf          =   {10,5,6};       //schlaf
-swort w_fuenf           =   {0,6,4};       //fünf
-swort w_zwoelf          =   {4,6,5};       //zehn
+swort w_fuenfmin           =   {0,6,4};       //fünf
+swort w_zwoelfmin          =   {4,6,5};       //zehn    FEHLER-kein Abstand zu Minuten
 swort w_minute          =   {9,6,6};       //minuten
 swort w_minuten         =   {9,6,7};       //minuten
 swort w_vor             =   {0,7,3};       //vor
 swort w_nach            =   {4,7,4};       //nach
+swort w_heute           =   {7,7,5};       //heute
 swort w_halb            =   {12,7,4};       //halb
 swort w_dreiviertel     =   {0,8,11};       //dreiviertel
 swort w_viertel         =   {4,8,7};       //viertel
@@ -72,7 +73,7 @@ swort w_brigitte        =   {6,15,8};       //brigitte
 
 
 void Set_Text(swort txt, int h, int s, int v) {
-    for (int x=txt.wx; x<txt.wx+txt.wc; x++)  leds[XY(x,txt.wy)] = CHSV(h,s,v);
+    for (int x=txt.wx; x<txt.wx+txt.wc; x++)  leds[XY(txt.wy,x)] = CHSV(h,s,v);    //x, y vertauscht zu alten Uhr
 }
 
 void Set_Laden (int h, int s, int v) {

@@ -41,7 +41,7 @@ const char thingName[] = "WortuhrB";
 const char wifiInitialApPassword[] = "25061960";
 
 // -- Configuration specific key. The value should be modified if config structure was changed.
-#define CONFIG_VERSION "conf_002"
+#define CONFIG_VERSION "conf_001"
 
 /* just for Info D1 mini 8266 (!)
 #define LED_BUILTIN 2
@@ -49,7 +49,7 @@ static const uint8_t D0   = 16;
 static const uint8_t D1   = 5;   
 static const uint8_t D2   = 4;   
 static const uint8_t D3   = 0;   //<be careful>
-static const uint8_t D4   = 2;   //led builtin-LED !!
+static const uint8_t D4   = 2;   //led builtin-LED !! und config-pin
 static const uint8_t D5   = 14;  
 static const uint8_t D6   = 12;
 static const uint8_t D7   = 13;
@@ -63,8 +63,6 @@ static const uint8_t TX   = 1;
 #define LED D2
 #define FASTLED_ALLOW_INTERRUPTS 0
 #include <FastLED.h> 
-
-
 
 // -- When CONFIG_PIN is pulled to ground on startup, the Thing will use the initial
 //      password to buld an AP. (E.g. in case of lost password)
@@ -182,7 +180,7 @@ IotWebConfPasswordParameter mqttUserPasswordParam = IotWebConfPasswordParameter(
 
 unsigned long lwait;
 int helli=20;
-int enable_es_ist;
+int enable_es_ist, enable_uhr;
 int savepraesenz=0;
 int lauflicht;
 
@@ -275,9 +273,9 @@ uint16_t scale = 711;
 uint16_t noise[MAX_DIMENSION][MAX_DIMENSION];
 
 //####################################################################################################################
-#include "layout13x13_V1.h"
+#include "layout16x16B.h"
 //#include "layout.h"
-#include "logik.h"
+#include "logik16x16B.h"
 
 
 
@@ -315,6 +313,7 @@ lauflicht=0;
   zz = random16();
   //########################
 
+  mqtt_send_enable=true;   //erster MQTT-Status senden
 
 }
   //########################
@@ -347,9 +346,8 @@ int sat=0;
 #include "Template_loop.h"
 
 
-if (mqtt_send_enable) {
-      mqttSend();
-      mqtt_send_enable=false;
+if (mqtt_send_enable) {   //wird wiederholt bis connection da ist.
+            mqttSend();
 }
 
 if ((digitalRead(praesenz)!=0) && (enablenoise>0) && (tm.tm_sec==0)) noiseval=helli/3; // drittel Helligkeit bei Noise. Bei Helligkeit=1 -> 0. Nachts also nicht
@@ -581,7 +579,7 @@ void mqttSend() {
    Htmlprintln("Publish Status");
 
    if (digitalRead(praesenz)) mqttClient.publish(s+"/Praesenz","anwesend"); else mqttClient.publish(s+"/Praesenz","abwesend");
-   
+   mqtt_send_enable=false;
   }
 }
 

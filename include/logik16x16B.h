@@ -23,6 +23,12 @@ int min_last=tm.tm_min-min_first*10;
 int stunde=tm.tm_hour;
 int tmp;
 
+ for(int i = 0; i < kMatrixWidth; i++) {
+    for(int j = 0; j < kMatrixHeight; j++) {
+
+            leds[XY(i,j)] = CHSV(30,0,0);
+    }
+  }
 
 if ((millis()-variantenticker) > 30000) {
     tmp=millis() % 6;
@@ -34,7 +40,7 @@ if ((millis()-variantenticker) > 30000) {
 
 
 if (enable_es_ist==1) {Set_Text(w_es,h,s,v); Set_Text(w_ist,h,s,v);}
-if (digitalRead(praesenz)!=0) {Set_Text(w_hallo,30,150,v/2); Set_Text(w_brigitte,30,150,v/2); if (variante==0) Set_Text(w_liebe,30,150,v/2); }
+
 
 
 if (variante==0) {
@@ -172,9 +178,6 @@ case 59: Set_Text(w_kurz,h,s,v); Set_Text(w_vor,h,s,v); stunde++; break;
 }
 }
 
-
-
-
 if (stunde>12) stunde=stunde-12;
 
 switch(stunde) {
@@ -195,7 +198,14 @@ case 12: Set_Text(w_zwoelf,h,s,v); break;
 
 }
 
+    FastLED.show();
+    last_millis=millis();
 }
 
 
+void Anzeigelogik(int h,int s, int v) {
+    if (enablehallo==1) if (digitalRead(praesenz)!=0) {Set_Text(w_hallo,30,150,v/2); Set_Text(w_brigitte,30,150,v/2); if (variante==0) Set_Text(w_liebe,30,150,v/2); }
 
+
+    FastLED.show();
+}

@@ -95,7 +95,8 @@ char pirwait_val[10];
 int enablehallo;
 char enablehallo_val[10];
 
-char colormode_val[10]="standard";
+int colormode;
+char colormode_val[10];
 
 
 int min_helligkeit;
@@ -154,7 +155,7 @@ group1.addItem(&volle_helligkeit_param);
 group1.addItem(&anablepir_Param);
 group1.addItem(&pirwait_param);
 group1.addItem(&enablehallo_Param);
-//group1.addItem(&colormode_param);
+group1.addItem(&colormode_param);
 }
 //###########################################################################################################################################################################################
 
@@ -198,8 +199,8 @@ int helli=20;
 int enable_es_ist, enable_gimmik;
 int savepraesenz=0;
 int lauflicht;
-int hue=30;
-int sat=20;
+int hue=0;
+int sat=0;
 
 
 int temp=0;
@@ -375,14 +376,13 @@ if ((enablenoise>0) && (tm.tm_sec==0)) {
      if (temp>=0) {hue=30; sat=map(temp,0,30,0,255);}          //zwischen 0 und 30 Grad eher gelb/orange, vermeidet schweinchenrosa, ab 30 Grad wirds rot
      else {hue=150; sat=map(temp,-25,0,255,0);}                //bei Minustemperauren eher blau
      if (temp>=30) {sat=255; hue=map(temp,30,40,30,0);}         //durch die Steuerung der Saturation um die 0 Grad weiss -Y wie Schnee
-
-  } else if (strcmp(colormode_val, "fancy")==0) {
-       hue=random(0,255);
-       sat=random(0,255);
-  } else {    
+} else if (strcmp(colormode_val, "fancy")==0) {
+  hue=random(0,255);
+  sat=random(0,255);
+} else {    
     hue=35; 
-    sat=40;
-    }
+    sat=250;
+}
 
   //########################
 

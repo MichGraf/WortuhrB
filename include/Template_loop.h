@@ -6,6 +6,7 @@
 
   time(&now);
   localtime_r(&now,&tm);
+  if (tm.tm_sec == 0) new_min=true; else new_min=false;
 
   if (needMqttConnect)
   {

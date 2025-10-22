@@ -119,7 +119,7 @@ IotWebConfNumberParameter max_helligkeit_param = IotWebConfNumberParameter("Lich
 IotWebConfNumberParameter nacht_helligkeit_param = IotWebConfNumberParameter("Helligkeit nachts (0..100)", "nacht_helligkeit_val", nacht_helligkeit_val, NUMBER_LEN, "4", "0..100", "min='0' max='100' step='1'");
 IotWebConfNumberParameter volle_helligkeit_param = IotWebConfNumberParameter("Helligkeit tagsüber maximal (10..255)", "volle_helligkeit_val", volle_helligkeit_val, NUMBER_LEN, "255", "10..255", "min='10' max='255' step='1'");
 
-IotWebConfTextParameter colormode_param = IotWebConfTextParameter("Color-Mode", "colormode", colormode_val, STRING_LEN);
+IotWebConfTextParameter colormode_param = IotWebConfTextParameter("Color-Mode", "colormode_val", colormode_val, STRING_LEN);
 
 //###################################### Alle Parameter definieren.
 //IotWebConfParameterGroup group1 = IotWebConfParameterGroup("group1", "Laufschrift");
@@ -371,7 +371,7 @@ if ((enablenoise>0) && (tm.tm_sec==0)) {
     sat=random(0,255);
     new_min=false;
     }
-  } else if (strcmp(colormode_val, "temperatur")==0) {
+  } else if (strcmp(colormode_val, "temp")==0) {
      if (temp>=0) {hue=30; sat=map(temp,0,30,0,255);}          //zwischen 0 und 30 Grad eher gelb/orange, vermeidet schweinchenrosa, ab 30 Grad wirds rot
      else {hue=150; sat=map(temp,-25,0,255,0);}                //bei Minustemperauren eher blau
      if (temp>=30) {sat=255; hue=map(temp,30,40,30,0);}         //durch die Steuerung der Saturation um die 0 Grad weiss -Y wie Schnee
@@ -381,7 +381,7 @@ if ((enablenoise>0) && (tm.tm_sec==0)) {
        sat=random(0,255);
   } else {    
     hue=35; 
-    sat=40;
+    sat=150;
     }
 
   //########################
@@ -402,11 +402,12 @@ if ((enablenoise>0) && (tm.tm_sec==0)) {
    
        }
 
-    Anzeigelogik(hue,sat,helli);
+  Anzeigelogik(hue,sat,helli);
+
   //########################
 
    if ((millis()-ticker) > 1000) {
-    if (digitalRead(praesenz) != savepraesenz) {mqttSend(); savepraesenz=digitalRead(praesenz);}
+    if (digitalRead(praesenz) != savepraesenz) {savepraesenz=digitalRead(praesenz);}
     ticker=millis();
    }
 }
@@ -531,7 +532,7 @@ void mqttMessageReceived(String &topic, String &payload)
     if (topic==s+"/SetWinter") {stat_winter=payload.toInt(); change=true;}
     if (topic==s+"/SetWeihnachten") {stat_weihnachten=payload.toInt(); change=true;}
 */
-    if (topic==s+"/SetTemp") {temp=payload.toInt(); change=false;}
+if (topic==s+"/SetTemp") {temp=payload.toInt(); change=false;}
 
  
 if (topic==s+"/SetHallo") {payload.toCharArray(enablehallo_val, 10); change=true;}                  //selected oder nicht

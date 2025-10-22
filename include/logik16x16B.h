@@ -1,3 +1,5 @@
+bool bedwahr, bedaktion=false;
+
 void Uhrlogik(int h,int s, int v) {
 
 /*   Info über verfügbare Zeitinfos
@@ -29,6 +31,7 @@ int tmp;
             leds[XY(i,j)] = CHSV(30,0,0);
     }
   }
+
 
 if ((millis()-variantenticker) > 30000) {
     tmp=millis() % 6;
@@ -197,15 +200,22 @@ case 11: Set_Text(w_elf,h,s,v); break;
 case 12: Set_Text(w_zwoelf,h,s,v); break;
 
 }
-
     FastLED.show();
     last_millis=millis();
 }
 
 
 void Anzeigelogik(int h,int s, int v) {
-    if (enablehallo==1) if (digitalRead(praesenz)!=0) {Set_Text(w_hallo,30,150,v/2); Set_Text(w_brigitte,30,150,v/2); if (variante==0) Set_Text(w_liebe,30,150,v/2); }
+
+  if (enablehallo==1 && digitalRead(praesenz)!=0) {
+       if (bedwahr==false) {bedwahr=true; bedaktion=true;}
+      } 
+  else bedwahr=false;
 
 
-    FastLED.show();
+   if (bedaktion) {Set_Text(w_hallo,30,150,v/2); Set_Text(w_brigitte,30,150,v/2); if (variante==0) Set_Text(w_liebe,30,150,v/2);
+       bedaktion=false;
+       FastLED.show();
+      }
+  
 }

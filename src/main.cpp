@@ -41,7 +41,7 @@ const char thingName[] = "WortuhrB";
 const char wifiInitialApPassword[] = "25061960";
 
 // -- Configuration specific key. The value should be modified if config structure was changed.
-#define CONFIG_VERSION "conf_004"
+#define CONFIG_VERSION "conf_005"
 
 /* just for Info D1 mini 8266 (!)
 #define LED_BUILTIN 2
@@ -140,7 +140,6 @@ max_helligkeit=atoi(max_helligkeit_val);
 nacht_helligkeit=atoi(nacht_helligkeit_val);
 volle_helligkeit=atoi(volle_helligkeit_val);
 
-
 }
 //###################################### Einrichtungsroutine, wird im Template_Setup aufgerufen
 void conf_init()
@@ -154,7 +153,7 @@ group1.addItem(&volle_helligkeit_param);
 group1.addItem(&anablepir_Param);
 group1.addItem(&pirwait_param);
 group1.addItem(&enablehallo_Param);
-//group1.addItem(&colormode_param);
+group1.addItem(&colormode_param);
 }
 //###########################################################################################################################################################################################
 

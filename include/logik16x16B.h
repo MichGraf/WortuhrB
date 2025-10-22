@@ -181,10 +181,41 @@ case 59: Set_Text(w_kurz); Set_Text(w_vor); stunde++; break;
 }
 }
 
+/*
+switch(stunde) {
+case 0: Set_CText(w_gute,30,150,helli/2); Set_CText(w_nacht,30,150,helli/2); break;
+case 1: 
+
+case 3: 
+case 2: 
+case 4: break;
+case 5: Set_CText(w_guten,30,150,helli/2); Set_CText(w_morgen,30,150,helli/2); break;
+case 6: Set_CText(w_guten,30,150,helli/2); Set_CText(w_morgen,30,150,helli/2); break;
+case 7: Set_CText(w_guten,30,150,helli/2); Set_CText(w_morgen,30,150,helli/2); break;
+case 8: 
+case 9: 
+case 10: break;
+case 11: Set_CText(w_schoenen,30,150,helli/2); Set_CText(w_tag,30,150,helli/2);break;
+case 12: Set_CText(w_schoenen,30,150,helli/2); Set_CText(w_tag,30,150,helli/2); break;
+case 13: Set_CText(w_schoenen,30,150,helli/2); Set_CText(w_tag,30,150,helli/2);  break;
+case 14:
+case 15:
+case 16: break;
+case 17: Set_CText(w_guten,30,150,helli/2); Set_CText(w_abend,30,150,helli/2); break;
+case 18: Set_CText(w_guten,30,150,helli/2); Set_CText(w_abend,30,150,helli/2); break;
+case 19: Set_CText(w_guten,30,150,helli/2); Set_CText(w_abend,30,150,helli/2); break;
+case 20: Set_CText(w_schoenen,30,150,helli/2); Set_CText(w_abend,30,150,helli/2); break;
+case 21: Set_CText(w_schoenen,30,150,helli/2); Set_CText(w_abend,30,150,helli/2); break;
+case 22: Set_CText(w_gute,30,150,helli/2); Set_CText(w_nacht,30,150,helli/2); break;
+case 23: Set_CText(w_gute,30,150,helli/2); Set_CText(w_nacht,30,150,helli/2); break;
+
+}
+
+*/
+
 if (stunde>12) stunde=stunde-12;
 
 switch(stunde) {
-
 case 0: Set_Text(w_zwoelf); break;
 case 1: if (tm.tm_min==0) Set_Text(w_ein); else Set_Text(w_eins); break;
 case 2: Set_Text(w_zwei); break;
@@ -198,8 +229,9 @@ case 9: Set_Text(w_neun); break;
 case 10: Set_Text(w_zehn); break;
 case 11: Set_Text(w_elf); break;
 case 12: Set_Text(w_zwoelf); break;
-
 }
+
+
 
 if (enablehallo==1 && digitalRead(praesenz)!=0) {Set_CText(w_hallo,30,150,helli/2); Set_CText(w_brigitte,30,150,helli/2); if (variante==0) Set_CText(w_liebe,30,150,helli/2);}
 

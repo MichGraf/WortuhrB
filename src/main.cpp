@@ -312,6 +312,8 @@ lauflicht=0;
 
   mqtt_send_enable=true;   //erster MQTT-Status senden
 
+  Htmlprintln(ESP.getResetReason());
+
 }
   //########################
 // Fill the x/y array of 8-bit noise values using the inoise8 function.
@@ -398,11 +400,10 @@ if ((enablenoise>0) && (tm.tm_sec==0)) {
    if (digitalRead(praesenz)==1) lastpraesenz=millis();
    if (enablepir==1) if (millis()-lastpraesenz>pirwait*60000) helli=nacht_helligkeit;   //pirwait in Minuten
 
-   if (noiseval==0) Uhrlogik(hue,sat,helli);
+   if (noiseval==0) Uhrlogik();
    
-       }
+  }
 
-  Anzeigelogik(hue,sat,helli);
 
   //########################
 

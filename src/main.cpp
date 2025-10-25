@@ -399,7 +399,7 @@ if ((enablenoise>0) && (tm.tm_sec==0)) {
    if (digitalRead(praesenz)==1) lastpraesenz=millis();
    if (enablepir==1) if (millis()-lastpraesenz>pirwait*60000) helli=nacht_helligkeit;   //pirwait in Minuten
 
-   if (noiseval==0) Uhrlogik();
+   if (noiseval==0) {Uhrlogik();}
    
   }
 

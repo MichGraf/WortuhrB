@@ -73,10 +73,12 @@ swort w_brigitte        =   {6,15,8};       //brigitte
 
 
 void Set_Text(swort txt) {
+
     for (int x=txt.wx; x<txt.wx+txt.wc; x++)  leds[XY(txt.wy,x)] = CHSV(hue,sat,helli);    //x, y vertauscht zu alten Uhr
 }
 
 void Set_CText(swort txt, int h, int s, int v) {
+
     for (int x=txt.wx; x<txt.wx+txt.wc; x++)  leds[XY(txt.wy,x)] = CHSV(h,s,v);    //x, y vertauscht zu alten Uhr
 }
 
